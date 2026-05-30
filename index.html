@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Coffee Esperlus | منوی دیجیتال</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Vazirmatn:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9933A;
+  --gold-light: #E4B86A;
+  --gold-pale: #F0D9A8;
+  --gold-dim: rgba(201,147,58,0.18);
+  --dark: #080604;
+  --dark-surface: #100D09;
+  --dark-card: #16120D;
+  --dark-border: rgba(201,147,58,0.12);
+  --cream: #F5ECD8;
+  --cream-dim: #C8B99A;
+  --muted: #7A6A52;
+  --red-accent: #6B2020;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:#080604;
+  color:var(--cream);
+  font-family:'Vazirmatn',sans-serif;
+  font-weight:300;
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ═══════════════════════════════
+   NOISE TEXTURE OVERLAY
+═══════════════════════════════ */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1000;
+  opacity:0.032;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px 256px;
+}
+
+/* ═══════════════════════════════
+   PAGE LOAD ANIMATION
+═══════════════════════════════ */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+@keyframes shimmer{
+  0%{background-position:200% center}
+  100%{background-position:-200% center}
+}
+@keyframes rotateSlow{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+@keyframes pulse{
+  0%,100%{opacity:0.4;transform:scale(1)}
+  50%{opacity:0.7;transform:scale(1.05)}
+}
+@keyframes lineGrow{
+  from{transform:scaleX(0)}
+  to{transform:scaleX(1)}
+}
+
+.fade-up{animation:fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both}
+.fade-up-1{animation-delay:0.1s}
+.fade-up-2{animation-delay:0.25s}
+.fade-up-3{animation-delay:0.4s}
+.fade-up-4{animation-delay:0.55s}
+.fade-in{animation:fadeIn 1.2s ease both}
+
+/* ═══════════════════════════════
+   HERO SECTION
+═══════════════════════════════ */
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:3rem 2rem 5rem;
+  overflow:hidden;
+}
+
+.hero-bg{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, #2A1606 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, #1A0A04 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, #1A0A04 0%, transparent 60%),
+    #080604;
+}
+
+/* Rotating decorative ring */
+.hero-ring{
+  position:absolute;
+  width:min(420px,90vw);
+  height:min(420px,90vw);
+  border-radius:50%;
+  border:1px solid rgba(201,147,58,0.07);
+  animation:rotateSlow 60s linear infinite;
+  pointer-events:none;
+}
+.hero-ring::before{
+  content:'';
+  position:absolute;
+  top:-3px;
+  left:50%;
+  transform:translateX(-50%);
+  width:6px;height:6px;
+  background:var(--gold);
+  border-radius:50%;
+  box-shadow:0 0 12px var(--gold);
+}
+.hero-ring-2{
+  width:min(320px,70vw);
+  height:min(320px,70vw);
+  border-color:rgba(201,147,58,0.05);
+  animation-direction:reverse;
+  animation-duration:40s;
+}
+.hero-ring-2::before{display:none}
+
+/* Ambient glow pulses */
+.glow-1,.glow-2{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  filter:blur(80px);
+  animation:pulse 6s ease-in-out infinite;
+}
+.glow-1{
+  width:300px;height:200px;
+  background:rgba(201,147,58,0.06);
+  top:10%;left:-10%;
+  animation-delay:0s;
+}
+.glow-2{
+  width:300px;height:200px;
+  background:rgba(107,32,32,0.08);
+  bottom:15%;right:-5%;
+  animation-delay:3s;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0;
+}
+
+/* Logo emblem */
+.logo-emblem{
+  position:relative;
+  width:110px;
+  height:110px;
+  margin-bottom:2rem;
+}
+.logo-emblem-ring{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:1.5px solid var(--gold);
+  opacity:0.6;
+}
+.logo-emblem-ring-outer{
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  border:1px solid rgba(201,147,58,0.2);
+}
+.logo-circle-inner{
+  position:absolute;
+  inset:8px;
+  border-radius:50%;
+  background:radial-gradient(135deg at 30% 30%, #7a2d2d 0%, #3d1010 60%, #1a0808 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.logo-circle-inner svg{
+  width:50px;height:50px;
+}
+
+/* Diamond ornament */
+.diamond{
+  width:8px;height:8px;
+  background:var(--gold);
+  transform:rotate(45deg);
+  margin:1.2rem auto;
+  opacity:0.7;
+  flex-shrink:0;
+}
+
+/* Cafe name */
+.hero-label{
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.7rem;
+  font-weight:400;
+  letter-spacing:0.5em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:0.6rem;
+}
+
+.hero-name{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,8vw,3.8rem);
+  font-weight:900;
+  letter-spacing:0.04em;
+  color:var(--cream);
+  line-height:1;
+  background:linear-gradient(135deg, #F5ECD8 0%, #E4B86A 40%, #F5ECD8 60%, #C9933A 100%);
+  background-size:300% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:shimmer 6s linear infinite;
+}
+
+.hero-name-fa{
+  font-family:'Vazirmatn',sans-serif;
+  font-size:1rem;
+  font-weight:400;
+  color:rgba(201,147,58,0.8);
+  letter-spacing:0.2em;
+  margin-top:0.5rem;
+}
+
+/* Decorative line with Est */
+.est-line{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin:1.4rem 0;
+}
+.est-rule{
+  height:1px;
+  width:60px;
+  background:linear-gradient(90deg,transparent,var(--gold));
+  transform-origin:right;
+  animation:lineGrow 1.2s 0.6s cubic-bezier(0.16,1,0.3,1) both;
+}
+.est-rule:last-child{
+  background:linear-gradient(90deg,var(--gold),transparent);
+  transform-origin:left;
+}
+.est-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.75rem;
+  letter-spacing:0.25em;
+  color:var(--muted);
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.hero-tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;
+  font-style:italic;
+  color:var(--cream-dim);
+  line-height:1.7;
+  max-width:280px;
+}
+
+/* Scroll indicator */
+.scroll-hint{
+  position:absolute;
+  bottom:2.5rem;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  z-index:2;
+  opacity:0.45;
+  animation:pulse 2.5s ease-in-out infinite;
+}
+.scroll-hint span{
+  font-size:0.6rem;
+  letter-spacing:0.2em;
+  color:var(--gold);
+  font-family:'Cormorant Garamond',serif;
+  text-transform:uppercase;
+}
+.scroll-mouse{
+  width:20px;height:30px;
+  border:1.5px solid var(--gold);
+  border-radius:10px;
+  position:relative;
+}
+.scroll-mouse::before{
+  content:'';
+  position:absolute;
+  top:5px;left:50%;
+  transform:translateX(-50%);
+  width:2px;height:6px;
+  background:var(--gold);
+  border-radius:2px;
+  animation:fadeUp 1.5s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════
+   STICKY NAV
+═══════════════════════════════ */
+.nav-wrapper{
+  position:sticky;
+  top:0;
+  z-index:200;
+  background:rgba(8,6,4,0.92);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--dark-border);
+}
+
+.nav-inner{
+  display:flex;
+  align-items:center;
+  padding:0 1rem;
+  max-width:700px;
+  margin:0 auto;
+  gap:4px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.nav-inner::-webkit-scrollbar{display:none}
+
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:0.75rem;
+  font-weight:700;
+  color:var(--gold);
+  white-space:nowrap;
+  padding:1rem 0.8rem 1rem 0.2rem;
+  border-left:1px solid rgba(201,147,58,0.15);
+  margin-left:6px;
+  letter-spacing:0.05em;
+  display:none;
+}
+
+.tab-btn{
+  background:transparent;
+  border:none;
+  color:var(--muted);
+  padding:0.9rem 0.7rem;
+  font-family:'Vazirmatn',sans-serif;
+  font-size:0.72rem;
+  font-weight:400;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all 0.25s;
+  position:relative;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+}
+.tab-btn::after{
+  content:'';
+  position:absolute;
+  bottom:-1px;left:50%;
+  transform:translateX(-50%) scaleX(0);
+  width:80%;height:2px;
+  background:var(--gold);
+  border-radius:2px;
+  transition:transform 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+.tab-btn:hover{color:var(--cream-dim)}
+.tab-btn.active{color:var(--gold);font-weight:600}
+.tab-btn.active::after{transform:translateX(-50%) scaleX(1)}
+
+/* ═══════════════════════════════
+   MENU CONTENT
+═══════════════════════════════ */
+.menu-wrap{
+  max-width:700px;
+  margin:0 auto;
+  padding:0 1.2rem 6rem;
+}
+
+/* Category section */
+.category{margin-bottom:1rem}
+
+.cat-header{
+  display:flex;
+  align-items:flex-end;
+  gap:14px;
+  padding:3rem 0 1.2rem;
+  position:relative;
+}
+.cat-num{
+  font-family:'Playfair Display',serif;
+  font-size:3.5rem;
+  font-weight:900;
+  line-height:1;
+  color:rgba(201,147,58,0.08);
+  position:absolute;
+  right:-8px;
+  top:1.8rem;
+  pointer-events:none;
+  letter-spacing:-0.02em;
+}
+.cat-texts{position:relative;z-index:1}
+.cat-title-en{
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.65rem;
+  font-weight:400;
+  letter-spacing:0.35em;
+  color:var(--gold);
+  text-transform:uppercase;
+  display:block;
+  margin-bottom:4px;
+}
+.cat-title-fa{
+  font-size:1.25rem;
+  font-weight:700;
+  color:var(--cream);
+  display:block;
+  line-height:1.2;
+}
+.cat-rule{
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,rgba(201,147,58,0.25),transparent);
+  margin-bottom:6px;
+}
+
+/* Menu items container */
+.items-list{
+  border:1px solid var(--dark-border);
+  border-radius:16px;
+  overflow:hidden;
+  background:var(--dark-card);
+}
+
+.menu-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:1.1rem 1.4rem;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  transition:background 0.2s,transform 0.15s;
+  position:relative;
+  overflow:hidden;
+}
+.menu-item:last-child{border-bottom:none}
+.menu-item::before{
+  content:'';
+  position:absolute;
+  right:0;top:0;bottom:0;
+  width:3px;
+  background:var(--gold);
+  transform:scaleY(0);
+  transform-origin:bottom;
+  transition:transform 0.25s cubic-bezier(0.16,1,0.3,1);
+  border-radius:2px 0 0 2px;
+}
+.menu-item:hover{background:rgba(201,147,58,0.04)}
+.menu-item:hover::before{transform:scaleY(1)}
+.menu-item:active{background:rgba(201,147,58,0.07)}
+
+.item-info{flex:1;min-width:0}
+
+.item-tags{display:flex;gap:5px;margin-bottom:5px;flex-wrap:wrap}
+.tag{
+  font-size:0.6rem;
+  font-weight:600;
+  letter-spacing:0.1em;
+  padding:2px 8px;
+  border-radius:20px;
+  text-transform:uppercase;
+}
+.tag-special{
+  background:rgba(201,147,58,0.12);
+  border:1px solid rgba(201,147,58,0.3);
+  color:var(--gold);
+}
+.tag-new{
+  background:rgba(107,32,32,0.2);
+  border:1px solid rgba(107,32,32,0.4);
+  color:#E07070;
+}
+
+.item-name-fa{
+  font-size:0.92rem;
+  font-weight:500;
+  color:var(--cream);
+  display:block;
+  line-height:1.3;
+}
+.item-name-en{
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.78rem;
+  font-weight:300;
+  font-style:italic;
+  color:var(--muted);
+  display:block;
+  margin-top:2px;
+  direction:ltr;
+  text-align:right;
+}
+.item-desc{
+  font-size:0.7rem;
+  color:var(--muted);
+  margin-top:4px;
+  display:block;
+  line-height:1.5;
+}
+
+.item-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:2px;
+  flex-shrink:0;
+}
+
+.item-price{
+  font-family:'Playfair Display',serif;
+  font-size:0.95rem;
+  font-weight:700;
+  color:var(--gold-light);
+  white-space:nowrap;
+  line-height:1;
+}
+.price-currency{
+  font-family:'Vazirmatn',sans-serif;
+  font-size:0.58rem;
+  font-weight:400;
+  color:var(--muted);
+  display:block;
+  text-align:center;
+  margin-top:3px;
+}
+
+/* Size chips */
+.size-chips{display:flex;gap:3px;margin-top:4px}
+.size-chip{
+  font-size:0.58rem;
+  font-weight:600;
+  padding:2px 6px;
+  border:1px solid rgba(201,147,58,0.2);
+  border-radius:4px;
+  color:var(--muted);
+  letter-spacing:0.05em;
+}
+
+/* Featured item */
+.menu-item.featured{
+  background:rgba(201,147,58,0.04);
+  border-bottom:1px solid rgba(201,147,58,0.08);
+}
+.menu-item.featured:last-child{border-bottom:none}
+
+/* ═══════════════════════════════
+   SECTION DIVIDER
+═══════════════════════════════ */
+.section-div{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:0.5rem 0;
+  padding:0 0.5rem;
+  opacity:0.25;
+}
+.section-div::before,.section-div::after{
+  content:'';flex:1;height:1px;
+  background:var(--gold);
+}
+.section-div-diamond{
+  width:5px;height:5px;
+  background:var(--gold);
+  transform:rotate(45deg);
+  flex-shrink:0;
+}
+
+/* ═══════════════════════════════
+   FOOTER
+═══════════════════════════════ */
+footer{
+  position:relative;
+  text-align:center;
+  padding:3rem 2rem 4rem;
+  border-top:1px solid var(--dark-border);
+  overflow:hidden;
+}
+footer::before{
+  content:'';
+  position:absolute;
+  top:0;left:50%;
+  transform:translateX(-50%);
+  width:60%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+.footer-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;
+  font-weight:900;
+  letter-spacing:0.08em;
+  background:linear-gradient(135deg,var(--cream),var(--gold-light));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  display:block;
+  margin-bottom:0.3rem;
+}
+.footer-fa{
+  font-size:0.8rem;
+  color:rgba(201,147,58,0.6);
+  letter-spacing:0.15em;
+  display:block;
+  margin-bottom:1.5rem;
+}
+.footer-info{
+  font-size:0.78rem;
+  color:var(--muted);
+  line-height:2;
+}
+.footer-phone{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:1rem;
+  padding:8px 20px;
+  border:1px solid rgba(201,147,58,0.2);
+  border-radius:30px;
+  font-size:0.85rem;
+  color:var(--gold-light);
+  font-family:'Playfair Display',serif;
+  letter-spacing:0.05em;
+  direction:ltr;
+}
+.footer-note{
+  margin-top:1.5rem;
+  font-size:0.62rem;
+  color:rgba(122,106,82,0.4);
+  line-height:1.8;
+}
+
+/* ═══════════════════════════════
+   RESPONSIVE
+═══════════════════════════════ */
+@media(min-width:480px){
+  .nav-logo{display:block}
+  .hero-name{font-size:clamp(2.8rem,6vw,3.8rem)}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-ring hero-ring-2"></div>
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
+
+  <div class="hero-content">
+    <div class="logo-emblem fade-up fade-up-1">
+      <div class="logo-emblem-ring-outer"></div>
+      <div class="logo-emblem-ring"></div>
+      <div class="logo-circle-inner">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path d="M22 17 Q20 11 22 7 Q24 3 22 0" stroke="#C9933A" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M32 17 Q30 11 32 7 Q34 3 32 0" stroke="#E4B86A" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M42 17 Q40 11 42 7 Q44 3 42 0" stroke="#C9933A" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M12 23 L16 45 Q17 50 32 50 Q47 50 48 45 L52 23Z" fill="#F5ECD8" opacity="0.92"/>
+          <ellipse cx="32" cy="29" rx="14" ry="5" fill="#C9933A" opacity="0.5"/>
+          <ellipse cx="32" cy="29" rx="7" ry="2.5" fill="#E4B86A" opacity="0.45"/>
+          <ellipse cx="32" cy="52" rx="22" ry="4" fill="#F5ECD8" opacity="0.4"/>
+          <path d="M48 27 Q58 27 58 37 Q58 47 48 47" stroke="#F5ECD8" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="hero-label fade-up fade-up-1">Welcome to</div>
+    <h1 class="hero-name fade-up fade-up-2">Coffee Esperlus</h1>
+    <div class="hero-name-fa fade-up fade-up-2">کافه اسپرلوس</div>
+
+    <div class="est-line fade-up fade-up-3">
+      <div class="est-rule"></div>
+      <div class="est-text">Est. 2022</div>
+      <div class="est-rule"></div>
+    </div>
+
+    <p class="hero-tagline fade-up fade-up-4">
+      Welcoming you in a different environment<br>
+      <span style="font-size:0.9rem;color:var(--muted)">پذیرای شما در محیطی متفاوت</span>
+    </p>
+  </div>
+
+  <div class="scroll-hint fade-in">
+    <div class="scroll-mouse"></div>
+    <span>منو</span>
+  </div>
+</header>
+
+<!-- ══ STICKY NAV ══ -->
+<nav class="nav-wrapper" id="nav">
+  <div class="nav-inner">
+    <span class="nav-logo">CE</span>
+    <button class="tab-btn active" onclick="goTo('espresso',this)">اسپرسو</button>
+    <button class="tab-btn" onclick="goTo('hot',this)">نوشیدنی گرم</button>
+    <button class="tab-btn" onclick="goTo('cold',this)">نوشیدنی سرد</button>
+    <button class="tab-btn" onclick="goTo('mocktail',this)">موکتیل</button>
+    <button class="tab-btn" onclick="goTo('smoothie',this)">اسموتی</button>
+    <button class="tab-btn" onclick="goTo('tea',this)">چای</button>
+    <button class="tab-btn" onclick="goTo('food',this)">غذا</button>
+    <button class="tab-btn" onclick="goTo('dessert',this)">دسر</button>
+  </div>
+</nav>
+
+<!-- ══ MENU ══ -->
+<main class="menu-wrap">
+
+  <!-- ESPRESSO -->
+  <section class="category" id="espresso">
+    <div class="cat-header">
+      <div class="cat-num">01</div>
+      <div class="cat-texts">
+        <span class="cat-title-en">Espresso Drinks</span>
+        <span class="cat-title-fa">نوشیدنی‌های اسپرسو</span>
+      </div>
+      <div class="cat-rule"></div>
+    </div>
+    <div class="items-list">
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">اسپرسو</span>
+          <span class="item-name-en">Espresso</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۳۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">دوپیو</span>
+          <span class="item-name-en">Doppio</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۴۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">آمریکانو</span>
+          <span class="item-name-en">Americano</span>
+          <div class="size-chips"><span class="size-chip">Single</span><span class="size-chip">Double</span></div>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۴۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">کاپوچینو</span>
+          <span class="item-name-en">Cappuccino</span>
+          <div class="size-chips"><span class="size-chip">Single</span><span class="size-chip">Double</span></div>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۵۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">لاته</span>
+          <span class="item-name-en">Caffè Latte</span>
+          <div class="size-chips"><span class="size-chip">Single</span><span class="size-chip">Double</span></div>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۵۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">فلت وایت</span>
+          <span class="item-name-en">Flat White</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۵۸,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">ماکیاتو</span>
+          <span class="item-name-en">Macchiato</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۵۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">موکا</span>
+          <span class="item-name-en">Caffè Mocha</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۶۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">کورتادو</span>
+          <span class="item-name-en">Cortado</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۵۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item featured">
+        <div class="item-info">
+          <div class="item-tags"><span class="tag tag-special">ویژه</span></div>
+          <span class="item-name-fa">رافوگاتو</span>
+          <span class="item-name-en">Affogato</span>
+          <span class="item-desc">اسپرسو روی بستنی وانیل</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۷۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-div"><div class="section-div-diamond"></div></div>
+
+  <!-- HOT -->
+  <section class="category" id="hot">
+    <div class="cat-header">
+      <div class="cat-num">02</div>
+      <div class="cat-texts">
+        <span class="cat-title-en">Hot Beverages</span>
+        <span class="cat-title-fa">نوشیدنی‌های گرم</span>
+      </div>
+      <div class="cat-rule"></div>
+    </div>
+    <div class="items-list">
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">هات چاکلت</span>
+          <span class="item-name-en">Hot Chocolate</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۵۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">شیر گرم عسل</span>
+          <span class="item-name-en">Warm Honey Milk</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۴۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">وایت موکا</span>
+          <span class="item-name-en">White Mocha</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۶۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">ماچا لاته</span>
+          <span class="item-name-en">Matcha Latte</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۶۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">چای ماسالا</span>
+          <span class="item-name-en">Masala Chai</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۵۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-div"><div class="section-div-diamond"></div></div>
+
+  <!-- COLD -->
+  <section class="category" id="cold">
+    <div class="cat-header">
+      <div class="cat-num">03</div>
+      <div class="cat-texts">
+        <span class="cat-title-en">Cold Drinks</span>
+        <span class="cat-title-fa">نوشیدنی‌های سرد</span>
+      </div>
+      <div class="cat-rule"></div>
+    </div>
+    <div class="items-list">
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">آیس آمریکانو</span>
+          <span class="item-name-en">Iced Americano</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۵۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">آیس لاته</span>
+          <span class="item-name-en">Iced Latte</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۶۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">آیس موکا</span>
+          <span class="item-name-en">Iced Mocha</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۷۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">کلد برو</span>
+          <span class="item-name-en">Cold Brew</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۶۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">فراپه</span>
+          <span class="item-name-en">Frappé</span>
+          <span class="item-desc">کافه · وانیل · شکلات</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۷۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">آیس ماچا لاته</span>
+          <span class="item-name-en">Iced Matcha Latte</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۷۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-div"><div class="section-div-diamond"></div></div>
+
+  <!-- MOCKTAIL -->
+  <section class="category" id="mocktail">
+    <div class="cat-header">
+      <div class="cat-num">04</div>
+      <div class="cat-texts">
+        <span class="cat-title-en">Mocktails</span>
+        <span class="cat-title-fa">موکتیل</span>
+      </div>
+      <div class="cat-rule"></div>
+    </div>
+    <div class="items-list">
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">بلو لاگون</span>
+          <span class="item-name-en">Blue Lagoon</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۷۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">ویرجین موهیتو</span>
+          <span class="item-name-en">Virgin Mojito</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۷۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">پینا کولادا</span>
+          <span class="item-name-en">Piña Colada</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۸۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">سانست تروپیکال</span>
+          <span class="item-name-en">Tropical Sunset</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۸۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">رُز لیموناد</span>
+          <span class="item-name-en">Rose Lemonade</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۷۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-div"><div class="section-div-diamond"></div></div>
+
+  <!-- SMOOTHIE -->
+  <section class="category" id="smoothie">
+    <div class="cat-header">
+      <div class="cat-num">05</div>
+      <div class="cat-texts">
+        <span class="cat-title-en">Smoothies & Shakes</span>
+        <span class="cat-title-fa">اسموتی و شیک</span>
+      </div>
+      <div class="cat-rule"></div>
+    </div>
+    <div class="items-list">
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">اسموتی توت فرنگی موز</span>
+          <span class="item-name-en">Strawberry Banana Smoothie</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۷۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">اسموتی انبه</span>
+          <span class="item-name-en">Mango Smoothie</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۷۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">شیک شکلات</span>
+          <span class="item-name-en">Chocolate Shake</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۸۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">شیک وانیل</span>
+          <span class="item-name-en">Vanilla Shake</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۸۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-div"><div class="section-div-diamond"></div></div>
+
+  <!-- TEA -->
+  <section class="category" id="tea">
+    <div class="cat-header">
+      <div class="cat-num">06</div>
+      <div class="cat-texts">
+        <span class="cat-title-en">Tea & Infusions</span>
+        <span class="cat-title-fa">چای و دمنوش</span>
+      </div>
+      <div class="cat-rule"></div>
+    </div>
+    <div class="items-list">
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">چای ایرانی</span>
+          <span class="item-name-en">Persian Tea</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۲۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">چای عطری</span>
+          <span class="item-name-en">Earl Grey</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۳۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">دمنوش گیاهی</span>
+          <span class="item-name-en">Herbal Infusion</span>
+          <span class="item-desc">بابونه · نعناع · زنجبیل · رزماری</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۴۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">چای ماسالا</span>
+          <span class="item-name-en">Masala Tea</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۴۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">آیس تی</span>
+          <span class="item-name-en">Iced Tea</span>
+          <span class="item-desc">لیمو · هلو · تمشک</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۵۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-div"><div class="section-div-diamond"></div></div>
+
+  <!-- FOOD -->
+  <section class="category" id="food">
+    <div class="cat-header">
+      <div class="cat-num">07</div>
+      <div class="cat-texts">
+        <span class="cat-title-en">Special & Home-style Food</span>
+        <span class="cat-title-fa">غذاهای ویژه و خانگی</span>
+      </div>
+      <div class="cat-rule"></div>
+    </div>
+    <div class="items-list">
+      <div class="menu-item featured">
+        <div class="item-info">
+          <div class="item-tags"><span class="tag tag-special">ویژه کافه</span></div>
+          <span class="item-name-fa">ساندویچ کلاب</span>
+          <span class="item-name-en">Club Sandwich</span>
+          <span class="item-desc">با مرغ، سبزیجات و سس مخصوص</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۱۲۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item featured">
+        <div class="item-info">
+          <div class="item-tags"><span class="tag tag-special">ویژه کافه</span></div>
+          <span class="item-name-fa">پنینی</span>
+          <span class="item-name-en">Panini</span>
+          <span class="item-desc">پنیر موزارلا و سبزیجات گریل</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۱۱۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">تست صبحانه</span>
+          <span class="item-name-en">Breakfast Toast</span>
+          <span class="item-desc">تخم‌مرغ، پنیر، گوجه</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۸۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">کیش لورن</span>
+          <span class="item-name-en">Quiche Lorraine</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۹۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">ماکارونی خانگی</span>
+          <span class="item-name-en">Home-style Pasta</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۱۳۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-div"><div class="section-div-diamond"></div></div>
+
+  <!-- DESSERTS -->
+  <section class="category" id="dessert">
+    <div class="cat-header">
+      <div class="cat-num">08</div>
+      <div class="cat-texts">
+        <span class="cat-title-en">Desserts & Sweets</span>
+        <span class="cat-title-fa">دسر و شیرینی</span>
+      </div>
+      <div class="cat-rule"></div>
+    </div>
+    <div class="items-list">
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">چیزکیک</span>
+          <span class="item-name-en">Cheesecake</span>
+          <span class="item-desc">کلاسیک · توت فرنگی · بلوبری</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۸۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">براونی</span>
+          <span class="item-name-en">Brownie</span>
+          <span class="item-desc">سرو با بستنی وانیل</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۷۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">تیرامیسو</span>
+          <span class="item-name-en">Tiramisu</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۹۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">کیک روز</span>
+          <span class="item-name-en">Cake of the Day</span>
+          <span class="item-desc">هر روز متفاوت — از گارسون بپرسید</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۷۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">وافل</span>
+          <span class="item-name-en">Waffle</span>
+          <span class="item-desc">با شکلات · موز · توت فرنگی</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۹۰,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <span class="item-name-fa">کوکی تازه</span>
+          <span class="item-name-en">Fresh Cookie</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">۳۵,۰۰۰</span>
+          <span class="price-currency">تومان</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <span class="footer-logo">Coffee Esperlus</span>
+  <span class="footer-fa">کافه اسپرلوس</span>
+  <div class="footer-info">
+    <div>میدان امام حسین، ابتدای خیابان ۱۷ شهریور</div>
+    <div>پاساژ محسن، طبقه اول، پلاک ۱۱</div>
+  </div>
+  <div>
+    <a class="footer-phone" href="tel:09195100260">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 012 1.18 2 2 0 014 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+      ۰۹۱۹-۵۱۰-۲۶۰
+    </a>
+  </div>
+  <div class="footer-note">
+    قیمت‌ها به تومان · همه نوشیدنی‌ها قابل تبدیل به شیر گیاهی هستند<br>
+    © Coffee Esperlus 2022 — All rights reserved
+  </div>
+</footer>
+
+<script>
+function goTo(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const navH = document.getElementById('nav').offsetHeight;
+  const top = el.getBoundingClientRect().top + window.scrollY - navH - 16;
+  window.scrollTo({ top, behavior: 'smooth' });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+const sections = ['espresso','hot','cold','mocktail','smoothie','tea','food','dessert'];
+const buttons = document.querySelectorAll('.tab-btn');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = sections.indexOf(e.target.id);
+      if (idx >= 0) {
+        buttons.forEach((b, i) => b.classList.toggle('active', i === idx));
+        // auto-scroll nav to active tab
+        const activeBtn = buttons[idx];
+        if (activeBtn) {
+          activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+    }
+  });
+}, { rootMargin: '-25% 0px -65% 0px', threshold: 0 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+</script>
+</body>
+</html>
